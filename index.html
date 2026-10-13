@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#B93A32">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="少年主公">
+<meta name="description" content="把学习任务翻译成治国安邦：点卯得军功，军功招名将，名将录图鉴。">
+<title>少年主公 · 学习军令台</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <div id="storageWarn" class="storage-warn" role="alert">
+    <b>⚠️ 数据存不下来</b>
+    这个浏览器禁用了本地存储，点卯记录关掉页面就会丢失。
+    请用 Safari / Chrome 通过网址打开（不要直接打开本地文件），或先在设置里导出备份。
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="seal-logo" aria-hidden="true">主公</div>
+      <div>
+        <h1 id="brandName">少年主公</h1>
+        <div id="seasonLabel" class="sub"></div>
+      </div>
+    </div>
+    <div class="wallet">
+      <div class="coin mg" title="可用军功"><span>⭐</span><b id="meritCount">0</b></div>
+      <div class="coin lg" title="招贤令"><span>🎟️</span><b id="orderCount">0</b></div>
+      <button id="btnDraw" class="btn gold">✨ 揭榜</button>
+    </div>
+  </header>
+
+  <nav id="tabs" class="tabs" aria-label="主导航">
+    <button data-view="today">今日</button>
+    <button data-view="week">一周</button>
+    <button data-view="heroes">武将</button>
+    <button data-view="stats">点将台</button>
+    <button data-view="report">军报</button>
+    <button data-view="settings">设置</button>
+  </nav>
+
+  <main id="main" aria-live="polite"></main>
+
+  <div class="footnote">「不追究前日之失，只论当下可用之兵。」</div>
+</div>
+
+<noscript><p class="noscript">少年主公需要开启 JavaScript 才能运行。</p></noscript>
+
+<!-- 经典脚本，按依赖顺序加载；不用 ES module，file:// 直接打开也能跑 -->
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/rules.js"></script>
+<script src="js/features.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/views/today.js"></script>
+<script src="js/views/week.js"></script>
+<script src="js/views/heroes.js"></script>
+<script src="js/views/stats.js"></script>
+<script src="js/views/report.js"></script>
+<script src="js/views/settings.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
