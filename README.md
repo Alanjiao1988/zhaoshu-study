@@ -11,7 +11,8 @@ npm run check    # 所有脚本语法检查
 
 ## 在 iPad 上安装
 
-1. 把整个目录放到任意静态网站（如 GitHub Pages），用 Safari 打开网址。
+1. 在 iPad 的 Safari 里打开 **https://alanjiao1988.github.io/zhaoshu-study/**
+   （代码推到 `main` 后，GitHub Actions 会先跑测试、再自动发布到这个地址，见 `.github/workflows/pages.yml`）。
 2. 点「分享 → 添加到主屏幕」，之后就像 App 一样全屏打开，没网也能用。
 3. 不要用「文件」App 直接打开 `index.html`：iPad 会禁用本地存储，记录关掉就丢（页面顶部会有红色提醒）。
 4. 数据只存在这台 iPad 的 Safari 里，定期在「设置 → 导出备份」存一份。
