@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#B93A32">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="少年主公">
+<meta name="description" content="把学习任务翻译成治国安邦：点卯得军功，军功招名将，名将录图鉴。">
+<title>少年主公 · 学习军令台</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="storageWarn" class="storage-warn" role="alert">
+  ⚠️ 这个浏览器禁用了本地存储，点卯记录<b>关掉页面就会丢失</b>。
+  请用 Safari / Chrome 通过网址打开（不要直接打开本地文件），或先在设置里导出备份。
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="seal" aria-hidden="true">主</span>
+    <div class="brand-text">
+      <h1 id="brandName">少年主公</h1>
+      <div id="seasonLabel" class="season"></div>
+    </div>
+  </div>
+  <div class="counters">
+    <div class="counter" title="可用军功"><span class="ci">⭐</span><b id="meritCount">0</b><small>军功</small></div>
+    <button id="btnDraw" class="counter draw" title="招贤令：点我揭榜"><span class="ci">🎟️</span><b id="orderCount">0</b><small>揭榜</small></button>
+  </div>
+</header>
+
+<main id="main" class="main" aria-live="polite"></main>
+
+<nav id="tabs" class="tabs" aria-label="主导航">
+  <button data-view="today"><span>🏯</span>今日</button>
+  <button data-view="week"><span>🗓️</span>一周</button>
+  <button data-view="heroes"><span>🐎</span>武将</button>
+  <button data-view="stats"><span>🚩</span>点将台</button>
+  <button data-view="report"><span>📜</span>军报</button>
+  <button data-view="settings"><span>⚙️</span>设置</button>
+</nav>
+
+<noscript><p class="noscript">少年主公需要开启 JavaScript 才能运行。</p></noscript>
+
+<!-- 经典脚本，按依赖顺序加载；不用 ES module，file:// 直接打开也能跑 -->
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/rules.js"></script>
+<script src="js/features.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/views/today.js"></script>
+<script src="js/views/week.js"></script>
+<script src="js/views/heroes.js"></script>
+<script src="js/views/stats.js"></script>
+<script src="js/views/report.js"></script>
+<script src="js/views/settings.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

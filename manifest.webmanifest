@@ -1,0 +1,14 @@
+{
+  "name": "少年主公 · 学习军令台",
+  "short_name": "少年主公",
+  "description": "把学习任务翻译成治国安邦：点卯得军功，军功招名将，名将录图鉴。",
+  "lang": "zh-CN",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F5EFE3",
+  "theme_color": "#B93A32",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
