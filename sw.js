@@ -2,7 +2,7 @@
    版本号跟着 APP_VERSION 走；发新版改这里，旧缓存会在 activate 时清掉。 */
 const CACHE = "shaozhu-1.6.0";
 const ASSETS = [
-  "./", "./index.html", "./manifest.webmanifest", "./icons/icon.svg", "./css/style.css",
+  "./", "./index.html", "./manifest.webmanifest", "./icons/icon.svg", "./icons/icon-180.png", "./icons/icon-512.png", "./css/style.css",
   "./js/config.js", "./js/util.js", "./js/store.js", "./js/rules.js", "./js/features.js", "./js/ui.js",
   "./js/views/today.js", "./js/views/week.js", "./js/views/heroes.js",
   "./js/views/stats.js", "./js/views/report.js", "./js/views/settings.js", "./js/main.js"

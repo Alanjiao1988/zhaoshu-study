@@ -140,11 +140,15 @@ function viewToday(){
     }
   }
 
+  // 下面几块分成左右两栏：左栏是军令清单，右栏是提示、主线、劲敌、结算、营地。
+  // iPad 横屏并排显示；竖屏变成单栏，按 .o1~.o6 的顺序排（见 style.css 的 .today-grid）
+  let top="", side="", tasks="";
+
   // ===== 下一步（只在看今天时显示，永远告诉孩子「再做什么能得什么」）=====
   if(isToday){
     const hint=nextStepHint();
     const cs=currentStreak();
-    html+='<div class="nextbar '+hint.tone+'">'
+    top+='<div class="nextbar '+hint.tone+'">'
         + '<span class="ni">'+hint.icon+'</span>'
         + '<span class="nt"><span class="n1">'+esc(hint.text)+'</span>'
         + '<span class="n2">'+esc(hint.sub)+'</span></span>'
@@ -152,20 +156,18 @@ function viewToday(){
         + '</div>';
     // 休整期里留一个自愿的出口 —— 这个动作本身就是最干净的主动性信号
     if(hint.rest){
-      html+='<div class="card center">'
+      top+='<div class="card center">'
           + '<p class="muted">休整就是休整，不用做任何事。<br>但如果今天特别想做一点，也可以。</p>'
           + '<button class="btn jade" onclick="openExtraDay()">✋ 今天想做一点</button></div>';
     }
   }
 
-  html+=storyCardHTML();
-  html+=zonesHTML(d);
 
   // ===== 今日军令 =====
-  html+='<div class="card"><div class="card-head"><h3>'+(isToday?"今日军令":"当日军令")+'</h3>'
+  tasks+='<div class="card"><div class="card-head"><h3>'+(isToday?"今日军令":"当日军令")+'</h3>'
       + '<span class="hint">'+(total?done+"/"+total+" 已点卯":"—")+'</span></div>';
   if(!total){
-    html+= rest
+    tasks+= rest
       ? '<div class="empty"><span class="ee">🍵</span>休整中 · '+esc(restReason(d))+'<br><small>这段时间不派军令，连战天数已冻结</small></div>'
       : '<div class="empty"><span class="ee">🍵</span>今日无军令，好生歇息</div>';
   }else{
@@ -173,43 +175,54 @@ function viewToday(){
     for(const [key,label] of TIME_SLOTS){
       const sub=list.filter(t=>(known.has(t.timeSlot)?t.timeSlot:"any")===key);
       if(!sub.length) continue;
-      html+='<div class="slot-label">'+label+'</div>';
-      for(const t of sub) html+=taskCardHTML(t,d);
+      tasks+='<div class="slot-label">'+label+'</div>';
+      for(const t of sub) tasks+=taskCardHTML(t,d);
     }
   }
   // 孩子的口子：自己想加就加，不用等批
-  if(isToday && !rest) html+='<button class="addrow" onclick="openKidAdd()"><span>➕</span> 再给我加一项</button>';
+  if(isToday && !rest) tasks+='<button class="addrow" onclick="openKidAdd()"><span>➕</span> 再给我加一项</button>';
   const hol=holidayTasks(d);
   if(hol.length){
-    html+='<div class="divider"></div>';
-    for(const t of hol) html+='<div class="holiday-row">✓ '+esc(t.name)+' 本周军令已达成，余日休整</div>';
+    tasks+='<div class="divider"></div>';
+    for(const t of hol) tasks+='<div class="holiday-row">✓ '+esc(t.name)+' 本周军令已达成，余日休整</div>';
   }
-  html+='</div>';
+  tasks+='</div>';
 
   // 休整日不出现劲敌，也不谈结算
   const cs = isToday ? currentStreak() : 0;
   if(rest){
-    html+='<div class="card center">'
+    side='<div class="card center">'
         + '<div class="strong">🍵 今日休整</div>'
         + '<p class="muted">休整期间不结算完成度，连战天数也冻结着。<br>'
         + (cs>0 ? ('已连战 '+cs+' 天，等你回来接着数。') : '等你回来再接着数。')+'</p></div>';
-    return html;
+    return html+todayGrid(top, tasks, side, d);
   }
 
-  html+=bossCardHTML(d, counts, isToday);
+  side+=bossCardHTML(d, counts, isToday);
 
   // ===== 结算 =====
   const complete = total>0 && done>=total;
   const ratio = total ? done/total : 1;
   const mult = complete ? streakMult(cs) : 1;
-  html+='<div class="card"><div class="card-head"><h3>'+(isToday?"今日结算":"当日结算")+'</h3>'
+  side+='<div class="card"><div class="card-head"><h3>'+(isToday?"今日结算":"当日结算")+'</h3>'
       + '<span class="hint">'+(complete?"军令齐备，已得招贤令 🎟️":"军令齐备可得招贤令 🎟️")+'</span></div>'
       + '<div class="prog"><i style="width:'+Math.round(ratio*100)+'%"></i></div>'
       + '<div class="row-between"><span>完成度 '+Math.round(ratio*100)+'%</span><span>军功 ⭐'+dayMerit(d)+'</span></div>'
       + (mult>1 ? '<div class="streak-note hot">🔥 连战 '+cs+' 天 · 今日军功 ×'+mult+'（'+streakName(cs)+'）</div>' : '')
       + (isToday && cs<3 ? '<div class="streak-note">'+(cs>0?'连战 '+cs+' 天 · ':'')+'再连 '+(3-cs)+' 天起享军功加成</div>' : '')
       + '</div>';
-  return html;
+  return html+todayGrid(top, tasks, side, d);
+}
+// 左栏：军令；右栏：提示 → 主线 → 劲敌/结算 → 营地。单栏时按 o1..o5 排成：提示、主线、营地、军令、劲敌/结算
+function todayGrid(top, tasks, side, d){
+  return '<div class="today-grid">'
+    + '<div class="tg-col tg-main"><div class="o4">'+tasks+'</div></div>'
+    + '<div class="tg-col tg-side">'
+    + (top?'<div class="o1">'+top+'</div>':'')
+    + '<div class="o2">'+storyCardHTML()+'</div>'
+    + '<div class="o5">'+side+'</div>'
+    + '<div class="o3">'+zonesHTML(d)+'</div>'
+    + '</div></div>';
 }
 VIEWS.today = viewToday;
 

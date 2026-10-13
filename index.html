@@ -11,39 +11,45 @@
 <title>少年主公 · 学习军令台</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id="storageWarn" class="storage-warn" role="alert">
-  ⚠️ 这个浏览器禁用了本地存储，点卯记录<b>关掉页面就会丢失</b>。
-  请用 Safari / Chrome 通过网址打开（不要直接打开本地文件），或先在设置里导出备份。
-</div>
+<div class="app">
+  <div id="storageWarn" class="storage-warn" role="alert">
+    <b>⚠️ 数据存不下来</b>
+    这个浏览器禁用了本地存储，点卯记录关掉页面就会丢失。
+    请用 Safari / Chrome 通过网址打开（不要直接打开本地文件），或先在设置里导出备份。
+  </div>
 
-<header class="topbar">
-  <div class="brand">
-    <span class="seal" aria-hidden="true">主</span>
-    <div class="brand-text">
-      <h1 id="brandName">少年主公</h1>
-      <div id="seasonLabel" class="season"></div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="seal-logo" aria-hidden="true">主公</div>
+      <div>
+        <h1 id="brandName">少年主公</h1>
+        <div id="seasonLabel" class="sub"></div>
+      </div>
     </div>
-  </div>
-  <div class="counters">
-    <div class="counter" title="可用军功"><span class="ci">⭐</span><b id="meritCount">0</b><small>军功</small></div>
-    <button id="btnDraw" class="counter draw" title="招贤令：点我揭榜"><span class="ci">🎟️</span><b id="orderCount">0</b><small>揭榜</small></button>
-  </div>
-</header>
+    <div class="wallet">
+      <div class="coin mg" title="可用军功"><span>⭐</span><b id="meritCount">0</b></div>
+      <div class="coin lg" title="招贤令"><span>🎟️</span><b id="orderCount">0</b></div>
+      <button id="btnDraw" class="btn gold">✨ 揭榜</button>
+    </div>
+  </header>
 
-<main id="main" class="main" aria-live="polite"></main>
+  <nav id="tabs" class="tabs" aria-label="主导航">
+    <button data-view="today">今日</button>
+    <button data-view="week">一周</button>
+    <button data-view="heroes">武将</button>
+    <button data-view="stats">点将台</button>
+    <button data-view="report">军报</button>
+    <button data-view="settings">设置</button>
+  </nav>
 
-<nav id="tabs" class="tabs" aria-label="主导航">
-  <button data-view="today"><span>🏯</span>今日</button>
-  <button data-view="week"><span>🗓️</span>一周</button>
-  <button data-view="heroes"><span>🐎</span>武将</button>
-  <button data-view="stats"><span>🚩</span>点将台</button>
-  <button data-view="report"><span>📜</span>军报</button>
-  <button data-view="settings"><span>⚙️</span>设置</button>
-</nav>
+  <main id="main" aria-live="polite"></main>
+
+  <div class="footnote">「不追究前日之失，只论当下可用之兵。」</div>
+</div>
 
 <noscript><p class="noscript">少年主公需要开启 JavaScript 才能运行。</p></noscript>
 
