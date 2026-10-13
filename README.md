@@ -30,8 +30,8 @@ npm run check    # 所有脚本语法检查
 | `js/ui.js` | 弹窗、提示、彩带、顶栏、视图切换 |
 | `js/views/*.js` | 六个页面：今日、一周、武将、点将台、军报、设置 |
 | `js/main.js` | 启动、每日仪式卡、毕业典礼、跨午夜自动刷新 |
-| `sw.js` / `manifest.webmanifest` | 离线缓存（网络优先）与 PWA 安装信息 |
-| `tests/` | 用 `vm` 加载规则层，在 Node 里跑的测试 |
+| `sw.js` / `manifest.webmanifest` | 离线缓存（页面网络优先、其余缓存优先）与 PWA 安装信息 |
+| `tests/` | 规则层测试（`vm` 加载）+ 发版检查（版本号、预缓存清单） |
 
 分层原则：`config → util → store → rules → features` 不碰 DOM，可在 Node 里测试；界面层只负责拼 HTML 和调用上面的函数。
 仍然使用经典 `<script>` 而不是 ES module，因为 `file://` 下 module 会被浏览器拦掉。
@@ -73,3 +73,13 @@ npm run check    # 所有脚本语法检查
 | 4 | `bonusTickets` 单独记录补发的招贤令 |
 
 以后要加字段：`SCHEMA` +1，在 `migrate()` 里补一条 `if(s.schema < N)` 的规则，再在 `tests/logic.test.js` 里加一个用例。
+
+## 发新版本
+
+离线缓存对 js/css 是**缓存优先**：只要版本号不变，iPad 上就一直用缓存里的旧文件。所以每次改完代码：
+
+1. 把版本号同时改到 `js/config.js`（`APP_VERSION`）、`sw.js`（`VERSION`）、`package.json`（`version`）。
+2. 新加了文件就加进 `sw.js` 的 `ASSETS`。
+3. 跑 `npm test`：版本号不一致、`index.html` 引用的文件没进预缓存，都会报错。
+
+iPad 下次联网打开时会装上新版本、清掉旧缓存；有时要关掉再开一次才生效。
